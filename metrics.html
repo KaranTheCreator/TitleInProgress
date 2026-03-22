@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Basketball Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+    <ul>
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('metrics') }}">Metrics</a> 
+      <a href="{{ url_for('calculator') }}">Calculator</a>
+    </ul>
+  </nav>
+
+    <header>
+        <h1>Welcome to Basketball Analytics</h1>
+    </header>
+    <main>
+    <section id="ts"> <!-- TS% content goes here --> </section>
+  <section id="efg"> <!-- eFG% content goes here --> </section>
+  <section id="usage"> <!-- Usage content goes here --> </section>
+</main>
+
+  <footer>
+    <p>© 2025 Basketball Analytics</p>
+  </footer>
+</body>
+</html>
