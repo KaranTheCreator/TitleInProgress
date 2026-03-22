@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Basketball Analytics - Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('metrics') }}">Metrics</a></li>
+            <li><a href="{{ url_for('calculator') }}">Calculator</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Calculator & Player Stats</h1>
+    </header>
+
+    <main>
+       <!-- Player Stats Search -->
+<section>
+    <h2>Search Player Stats</h2>
+    <form method="POST" action="{{ url_for('calculate_per') }}">
+        <input type="text" name="player_name" placeholder="Enter player name" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if name %}
+        <h3>{{ name }}</h3>
+    {% endif %}
+
+    {% if stats %}
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Season</th>
+                <th>Team</th>
+                <th>PPG</th>
+                <th>RPG</th>
+                <th>APG</th>
+                <th>BPG</th>
+                <th>SPG</th>
+                <th>FG%</th>
+            </tr>
+            {% for row in stats %}
+            <tr>
+                <td>{{ row.SEASON_ID }}</td>
+                <td>{{ row.TEAM }}</td>
+                <td>{{ row.PPG | round(1) }}</td>
+                <td>{{ row.RPG | round(1) }}</td>
+                <td>{{ row.APG | round(1) }}</td>
+                <td>{{ row.BPG | round(1) }}</td>
+                <td>{{ row.SPG | round(1) }}</td>
+                <td>{{ (row.FG_PCT * 100) | round(1) }}%</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</section>
+
+<!-- PER Calculator -->
+<form method="POST" action="{{ url_for('calculate_per') }}">
+    <label>Points:</label>
+    <input type="number" name="points" step="0.1" required>
+    <label>Rebounds:</label>
+    <input type="number" name="rebounds" step="0.1" required>
+    <label>Assists:</label>
+    <input type="number" name="assists" step="0.1" required>
+    <label>Steals:</label>
+    <input type="number" name="steals" step="0.1" required>
+    <label>Blocks:</label>
+    <input type="number" name="blocks" step="0.1" required>
+    <label>FGA:</label>
+    <input type="number" name="fga" step="0.1" required>
+    <label>FGM:</label>
+    <input type="number" name="fgm" step="0.1" required>
+    <label>FTA:</label>
+    <input type="number" name="fta" step="0.1" required>
+    <label>FTM:</label>
+    <input type="number" name="ftm" step="0.1" required>
+    <label>Turnovers:</label>
+    <input type="number" name="turnovers" step="0.1" required>
+    <button type="submit">Calculate PER</button>
+</form>
+
+{% if result is not none %}
+    <h3>Calculated PER: {{ result }}</h3>
+{% endif %}
+    </main>
